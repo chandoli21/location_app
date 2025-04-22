@@ -44,6 +44,30 @@ class _FilterDialogState extends State<FilterDialog> {
     super.dispose();
   }
 
+  void _handleCategorySelection(String category) {
+    setState(() {
+      if (_currentFilter.category == category) {
+        // If the same category is selected again, clear it
+        _currentFilter = Filter(
+          category: null,
+          sortBy: _currentFilter.sortBy,
+          maxDistance: _currentFilter.maxDistance,
+        );
+        _categoryController.text = '';
+      } else {
+        // Select the new category
+        _currentFilter = Filter(
+          category: category,
+          sortBy: _currentFilter.sortBy,
+          maxDistance: _currentFilter.maxDistance,
+        );
+        _categoryController.text = category;
+      }
+    });
+    // Apply the filter immediately when a category is selected or deselected
+    widget.onFilterChanged(_currentFilter);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -69,10 +93,14 @@ class _FilterDialogState extends State<FilterDialog> {
               ),
               onChanged: (value) {
                 setState(() {
-                  _currentFilter = _currentFilter.copyWith(
+                  _currentFilter = Filter(
                     category: value.isEmpty ? null : value,
+                    sortBy: _currentFilter.sortBy,
+                    maxDistance: _currentFilter.maxDistance,
                   );
                 });
+                // Apply the filter immediately when text is changed
+                widget.onFilterChanged(_currentFilter);
               },
             ),
             const SizedBox(height: 16),
@@ -82,14 +110,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 return FilterChip(
                   label: Text(category),
                   selected: _currentFilter.category == category,
-                  onSelected: (selected) {
-                    setState(() {
-                      _currentFilter = _currentFilter.copyWith(
-                        category: selected ? category : null,
-                      );
-                      _categoryController.text = selected ? category : '';
-                    });
-                  },
+                  onSelected: (_) => _handleCategorySelection(category),
                 );
               }).toList(),
             ),
@@ -122,8 +143,14 @@ class _FilterDialogState extends State<FilterDialog> {
               ],
               onChanged: (value) {
                 setState(() {
-                  _currentFilter = _currentFilter.copyWith(sortBy: value);
+                  _currentFilter = Filter(
+                    category: _currentFilter.category,
+                    sortBy: value,
+                    maxDistance: _currentFilter.maxDistance,
+                  );
                 });
+                // Apply the filter immediately when sort option is changed
+                widget.onFilterChanged(_currentFilter);
               },
             ),
           ],
@@ -138,10 +165,9 @@ class _FilterDialogState extends State<FilterDialog> {
         ),
         TextButton(
           onPressed: () {
-            widget.onFilterChanged(_currentFilter);
             Navigator.of(context).pop();
           },
-          child: const Text('적용'),
+          child: const Text('확인'),
         ),
       ],
     );
