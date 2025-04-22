@@ -159,13 +159,15 @@ class _FilterDialogState extends State<FilterDialog> {
       actions: [
         TextButton(
           onPressed: () {
+            // Reset to initial filter state when canceling
+            widget.onFilterChanged(widget.initialFilter);
             Navigator.of(context).pop();
           },
           child: const Text('취소'),
         ),
         TextButton(
           onPressed: () {
-            // Apply the filter one final time before closing
+            // Keep the current filter state when confirming
             widget.onFilterChanged(_currentFilter);
             Navigator.of(context).pop();
           },

@@ -12,7 +12,7 @@ class HomeState {
 
   HomeState({
     required this.locations,
-    this.filter = const Filter(),
+    this.filter = const Filter(category: null, sortBy: null, maxDistance: null),
     this.isLoading = false,
     this.lastSearchQuery,
   });
@@ -61,13 +61,15 @@ class HomeViewModel extends Notifier<HomeState> {
   }
 
   void updateFilter(Filter newFilter) {
+    // Always update the filter state
+    state = state.copyWith(filter: newFilter);
+
     if (state.lastSearchQuery != null) {
       // If we have a previous search, reapply it with the new filter
       searchLocation(state.lastSearchQuery!);
-    } else {
-      // If no previous search, just update the filter
+    } else if (state.locations.isNotEmpty) {
+      // If we have locations but no search query, apply filter to current locations
       state = state.copyWith(
-        filter: newFilter,
         locations: _applyFilters(state.locations),
       );
     }
@@ -77,12 +79,14 @@ class HomeViewModel extends Notifier<HomeState> {
     var filteredLocations = List<Location>.from(locations);
 
     // Apply category filter
-    if (state.filter.category != null) {
-      filteredLocations = filteredLocations
-          .where((location) =>
-              location.category.contains(state.filter.category!) ||
-              location.title.contains(state.filter.category!))
-          .toList();
+    if (state.filter.category != null && state.filter.category!.isNotEmpty) {
+      final category = state.filter.category!.toLowerCase();
+      filteredLocations = filteredLocations.where((location) {
+        final locationCategory = location.category.toLowerCase();
+        final locationTitle = location.title.toLowerCase();
+        return locationCategory.contains(category) ||
+            locationTitle.contains(category);
+      }).toList();
     }
 
     // Apply distance filter
