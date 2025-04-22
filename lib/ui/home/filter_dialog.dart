@@ -165,6 +165,8 @@ class _FilterDialogState extends State<FilterDialog> {
         ),
         TextButton(
           onPressed: () {
+            // Apply the filter one final time before closing
+            widget.onFilterChanged(_currentFilter);
             Navigator.of(context).pop();
           },
           child: const Text('확인'),

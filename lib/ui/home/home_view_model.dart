@@ -8,22 +8,26 @@ class HomeState {
   final List<Location> locations;
   final Filter filter;
   final bool isLoading;
+  final String? lastSearchQuery;
 
   HomeState({
     required this.locations,
     this.filter = const Filter(),
     this.isLoading = false,
+    this.lastSearchQuery,
   });
 
   HomeState copyWith({
     List<Location>? locations,
     Filter? filter,
     bool? isLoading,
+    String? lastSearchQuery,
   }) {
     return HomeState(
       locations: locations ?? this.locations,
       filter: filter ?? this.filter,
       isLoading: isLoading ?? this.isLoading,
+      lastSearchQuery: lastSearchQuery ?? this.lastSearchQuery,
     );
   }
 }
@@ -52,14 +56,21 @@ class HomeViewModel extends Notifier<HomeState> {
     state = state.copyWith(
       locations: _applyFilters(result),
       isLoading: false,
+      lastSearchQuery: query,
     );
   }
 
   void updateFilter(Filter newFilter) {
-    state = state.copyWith(
-      filter: newFilter,
-      locations: _applyFilters(state.locations),
-    );
+    if (state.lastSearchQuery != null) {
+      // If we have a previous search, reapply it with the new filter
+      searchLocation(state.lastSearchQuery!);
+    } else {
+      // If no previous search, just update the filter
+      state = state.copyWith(
+        filter: newFilter,
+        locations: _applyFilters(state.locations),
+      );
+    }
   }
 
   List<Location> _applyFilters(List<Location> locations) {
