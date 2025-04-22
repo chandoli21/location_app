@@ -1,6 +1,6 @@
-import 'package:flutter_local_search_app/data/model/location.dart';
-import 'package:flutter_local_search_app/data/repository/location_repository.dart';
-import 'package:flutter_local_search_app/data/repository/vworld_repository.dart';
+import 'package:location_app/data/model/location.dart';
+import 'package:location_app/data/repository/location_repository.dart';
+import 'package:location_app/data/repository/vworld_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeState {

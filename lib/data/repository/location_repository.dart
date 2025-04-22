@@ -1,4 +1,4 @@
-import 'package:flutter_local_search_app/data/model/location.dart';
+import 'package:location_app/data/model/location.dart';
 import 'package:dio/dio.dart';
 
 class LocationRepository {

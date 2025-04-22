@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_search_app/core/geolocator_helper.dart';
-import 'package:flutter_local_search_app/ui/detail/detail_page.dart';
-import 'package:flutter_local_search_app/ui/home/home_view_model.dart';
+import 'package:location_app/core/geolocator_helper.dart';
+import 'package:location_app/ui/detail/detail_page.dart';
+import 'package:location_app/ui/home/home_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
@@ -30,7 +32,7 @@ class HomePage extends StatelessWidget {
                   height: 50,
                   color: Colors.transparent,
                   alignment: Alignment.center,
-                  child: Icon(Icons.gps_fixed),
+                  child: const Icon(Icons.gps_fixed),
                 ),
               )
             ],
@@ -46,12 +48,12 @@ class HomePage extends StatelessWidget {
                     if (states.contains(WidgetState.focused)) {
                       return OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.black),
+                        borderSide: const BorderSide(color: Colors.black),
                       );
                     }
                     return OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     );
                   },
                 ),
@@ -59,9 +61,9 @@ class HomePage extends StatelessWidget {
             ),
           ),
           body: ListView.separated(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             itemCount: state.locations.length,
-            separatorBuilder: (context, index) => SizedBox(height: 20),
+            separatorBuilder: (context, index) => const SizedBox(height: 20),
             itemBuilder: (context, index) {
               final location = state.locations[index];
               return GestureDetector(
@@ -85,13 +87,13 @@ class HomePage extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         location.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
