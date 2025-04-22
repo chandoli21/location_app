@@ -15,8 +15,8 @@ class LocationRepository {
             },
             options: Options(
               headers: {
-                'X-Naver-Client-Id': 'MpN9F_cJAAjiqzvKWbZL',
-                'X-Naver-Client-Secret': 'XRD75_zFj0',
+                'X-Naver-Client-Id': 'ABn2ztLDnM8nuCNaddqW',
+                'X-Naver-Client-Secret': 'E7XNAiSR1L',
               },
             ));
 
