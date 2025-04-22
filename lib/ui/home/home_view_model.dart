@@ -68,8 +68,9 @@ class HomeViewModel extends Notifier<HomeState> {
     // Apply category filter
     if (state.filter.category != null) {
       filteredLocations = filteredLocations
-          .where(
-              (location) => location.category.contains(state.filter.category!))
+          .where((location) =>
+              location.category.contains(state.filter.category!) ||
+              location.title.contains(state.filter.category!))
           .toList();
     }
 
@@ -82,12 +83,15 @@ class HomeViewModel extends Notifier<HomeState> {
     if (state.filter.sortBy != null) {
       switch (state.filter.sortBy) {
         case SortOption.distance:
+          // For now, we'll just return the original order
           // TODO: Implement distance sorting when we have distance data
           break;
         case SortOption.rating:
+          // For now, we'll just return the original order
           // TODO: Implement rating sorting when we have rating data
           break;
         case SortOption.popularity:
+          // For now, we'll just return the original order
           // TODO: Implement popularity sorting when we have popularity data
           break;
         default:

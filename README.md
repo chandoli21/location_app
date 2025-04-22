@@ -54,7 +54,8 @@ lib/
 │   └── geolocator_helper.dart
 ├── data/
 │   ├── model/
-│   │   └── location.dart
+│   │   ├── location.dart
+│   │   └── filter.dart
 │   └── repository/
 │       ├── location_repository.dart
 │       └── vworld_repository.dart
@@ -63,7 +64,8 @@ lib/
     │   └── detail_page.dart
     └── home/
         ├── home_page.dart
-        └── home_view_model.dart
+        ├── home_view_model.dart
+        └── filter_dialog.dart
 ```
 
 ## Features in Detail
@@ -74,13 +76,24 @@ lib/
 - Real-time search results
 
 ### Filtering and Sorting
-- Filter results by category (e.g., restaurants, cafes, shopping)
+- Filter results by category with common Korean categories:
+  - 음식점 (Restaurants)
+  - 카페 (Cafes)
+  - 쇼핑 (Shopping)
+  - 숙박 (Accommodation)
+  - 문화시설 (Cultural Facilities)
+  - 관광지 (Tourist Spots)
+  - 병원 (Hospitals)
+  - 약국 (Pharmacies)
+  - 학교 (Schools)
+  - 주차장 (Parking Lots)
 - Sort results by:
-  - Distance from current location
-  - Rating (if available)
-  - Popularity
+  - 거리순 (Distance)
+  - 평점순 (Rating)
+  - 인기순 (Popularity)
 - Multiple filter combinations
-- Easy-to-use filter interface
+- Easy-to-use filter interface with category chips
+- Korean language support throughout the app
 
 ## Dependencies
 
@@ -88,6 +101,7 @@ lib/
 - `dio`: ^5.7.0 - For making HTTP requests
 - `flutter_riverpod`: ^2.6.1 - For state management
 - `geolocator`: ^13.0.2 - For handling location services
+- `html_unescape`: ^2.0.0 - For handling HTML entities in API responses
 
 ## Contributing
 

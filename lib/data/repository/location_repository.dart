@@ -20,10 +20,13 @@ class LocationRepository {
               },
             ));
 
+    print('Naver API Response Status: ${response.statusCode}');
+    print('Naver API Response Data: ${response.data}');
+
     if (response.statusCode == 200) {
-      return List.from(response.data['items'])
-          .map((e) => Location.fromJson(e))
-          .toList();
+      final items = response.data['items'] as List;
+      print('Number of items found: ${items.length}');
+      return items.map((e) => Location.fromJson(e)).toList();
     }
 
     return [];

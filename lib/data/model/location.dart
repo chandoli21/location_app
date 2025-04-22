@@ -10,6 +10,8 @@
 //       "mapy": "375133680"
 //     }
 
+import 'package:html_unescape/html_unescape.dart';
+
 class Location {
   final String title;
   final String link;
@@ -33,17 +35,20 @@ class Location {
     required this.mapy,
   });
 
-  factory Location.fromJson(Map<String, dynamic> map) => Location(
-        title: map["title"],
-        link: map["link"],
-        category: map["category"],
-        description: map["description"],
-        telephone: map["telephone"],
-        address: map["address"],
-        roadAddress: map["roadAddress"],
-        mapx: map["mapx"],
-        mapy: map["mapy"],
-      );
+  factory Location.fromJson(Map<String, dynamic> map) {
+    final unescape = HtmlUnescape();
+    return Location(
+      title: unescape.convert(map["title"]?.toString() ?? ''),
+      link: map["link"]?.toString() ?? '',
+      category: map["category"]?.toString() ?? '',
+      description: map["description"]?.toString() ?? '',
+      telephone: map["telephone"]?.toString() ?? '',
+      address: map["address"]?.toString() ?? '',
+      roadAddress: map["roadAddress"]?.toString() ?? '',
+      mapx: map["mapx"]?.toString() ?? '',
+      mapy: map["mapy"]?.toString() ?? '',
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "title": title,
